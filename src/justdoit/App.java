@@ -24,10 +24,20 @@ public class App {
             ex.printStackTrace();
         }
         
+
+        
+        //Instanciando a classe Home
         Home home = new Home();
+
+        //Com o setResizable(false) não deixamos o usuário redimensionar a janela
         home.setResizable(false);
+
+        //Setando oq acontecerá quando o usuário clicar no X, nesse caso, o aplicativo vai fechar
         home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         home.setLocationRelativeTo(null);
+
+        //Setando a visibilidade do frame Home como true
         home.setVisible(true);
         
         

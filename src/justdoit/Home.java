@@ -13,7 +13,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import javax.swing.JComponent;
 
 
 /**
@@ -22,6 +21,7 @@ import javax.swing.JComponent;
  */
 public class Home extends javax.swing.JFrame {
 
+    //Nessa linha eu tô criando um vetor chamado instances que armazena valores do tipo CardContainer.. CardContainer é a classe que eu criei pra criar novos cards
     private static List<CardContainer> instances = new ArrayList<>();
     
     
@@ -34,8 +34,12 @@ public class Home extends javax.swing.JFrame {
         deleteButton.setFocusPainted(false);
         editButton.setFocusPainted(false);
         
+
+        //Nessa parte eu estou adicionando o evento addMouseListener ao appContainer para verificar quando o usuário clicou no appContainer
         appContainer.addMouseListener(new MouseAdapter() {
         @Override
+            //Nessa parte eu tô fazendo com q o appContainer fique em foco.
+            //Eu fiz isso pra que quando o usuário clique no Texto pra editar e depois clique fora dele, o foco saia do Texto e vá para o appContainer, fazendo com q ele pare de editar o texto
             public void mouseClicked(MouseEvent e) {
                 appContainer.requestFocusInWindow();
             }
@@ -49,16 +53,24 @@ public class Home extends javax.swing.JFrame {
        
     }
     
+
+    //Aqui eu criei um método pra criar uma nova Task(tarefa)
     public static void addNewTask(String title, String description, Home home) {
-        
+        //Nessa primeira linha eu instancio a classe CardContainer
+        //Essa classe é a classe que cria um nova cartãozinho pra task
         CardContainer cardContainer = new CardContainer(title, description, home.cardsContainer);
         
-        
-        
-        
+        //Nessa linha eu tô adicinando a instância cardContainer ao vetor instances.. isso vai acontecer toda vez que essa função for executada, ou seja, sempre q o usuário
+        //criar uma nova task, a instancia da classe criada vai ser adicionada ao vetor instances.
         instances.add(cardContainer);
+
+
+        //Nessa linha eu tô criando uma variável do tipo JPanel (JPanel é aquele container branco que tu coloca na aba desing)
+        //Eu atribuo à variável newTask cardContainer.getNewTaskCard(). Esse método vai me retornar o cartãozinho da task.
         JPanel newTaskCard = cardContainer.getNewTaskCard();
         
+
+        //aqui é aquele mesmo esquema q eu fiz lá em cima com a parada do foco, mas dessa vez é o no newTaskCard, que é o cartãozinho
         newTaskCard.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -66,29 +78,44 @@ public class Home extends javax.swing.JFrame {
             }
         });
         
-        newTaskCard.addMouseListener(new MouseAdapter() {
-            
-            
+
+
+
+        //Nessa parte eu tô adicionando um evento de mouseListener para verificar quando o usuário vai clicar no newTaskCard(que é o cartãozinho)
+        newTaskCard.addMouseListener(new MouseAdapter() {    
              @Override
+                
                 public void mouseClicked(MouseEvent e) {
+                    //Quando ele clicar, eu vou verficar se a variável selected dentro da classe cardContainer (que é a classe que cria o cartãozinho) é true ou false
                     if(cardContainer.selected) {
+                        //Se for true eu chamo o método unselected() que vai deselecionar o cartãozinho
                         cardContainer.unselected();
+
+                        // se for falso, significa que o cartãozinho não tá selecionado, por isso, eu chamo o método selected() para selecionar ele
                     }else cardContainer.selected();
                 }
         });
         
-        home.cardsContainer.add(cardContainer.getNewTaskCard());
+        //Finalmente, nessa linha, eu tô adicionando o newTaskCard ao meu container que guarda todos os cartõezinhos, ou seja, eu tô acidionando mais um cartão 
+        home.cardsContainer.add(newTaskCard);
         
+        //Essas duas linhas server para atualizar o container dos cartõeszinhos
         home.cardsContainer.revalidate();
         home.cardsContainer.repaint();
+
+        //Aqui nessa linha eu tô setando a visibilidade da mensagem "suas tasks aparecerão aqui" como false 
         home.message.setVisible(false);
+
+        //e nessa eu tô setando a visibilidade do texto "Tasks" como true, pra q ele aparece assim que a frase de cima sumir
         home.h1.setVisible(true);
         
         
+
         Color h1Color = new Color(90, 90, 90);
         home.h1.setForeground(h1Color);
 
-        
+        //Essa parte tem a ver a estilização.. mas aqui eu tô setando o layout do cardsContainer como flex alinhando os elementos da esquerda pra direita.. dessa forma os cartões serão
+        //adicionados da esquerda pra direita e de cima pra baixo.
         home.cardsContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
 
     }
@@ -236,13 +263,21 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+
+        //essa função sera executada quando o botão de editar for clicado
+        //É aqui que a gente usa o vetor que a gente criou pra guardar todas as instancias da classe CardContainer que foram criadas.
+        //Com esse for a gente percorre todo o vetor, e pra cada elemento dentro do vetor a gente executa alguma coisa
         for(CardContainer instance: instances) {
+            //essa coisa é isso aqui
+            //nessa linha a gente chama o método done() de dentro da classe que tá guardada dentro do vetor. A gente armazenou instancias da classe CardContainer,
+            //então a gente tá chamando o método done de dentro da classe cardContainer, só que pra todas as instancias, já que percorremos todo o vetor. Meio confuso mas dá pra entender
             instance.done();
         }
     }//GEN-LAST:event_editButtonActionPerformed
 
+    
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-
+        //Aqui a gente tá fazendo a msm coisa que na função acima, só que pro botão de deletar
         for(CardContainer instance: instances) {
             instance.delete(cardsContainer);
         }
