@@ -287,12 +287,18 @@ public class Home extends javax.swing.JFrame {
         
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+
+    //esse botão é o de adicionar
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        //assim que o usuário clica nele eu crio uma nova instancia de newTask() que é ou frame (o frame de criação)
         NewTask newTask = new NewTask();
-        newTask.home = this;
-        newTask.setVisible(true);
+
         
+        newTask.setVisible(true); //nessa linha a gente tá setando a vizualização do frame como verdadeira
         
+        newTask.home = this; 
+        // nessa linha eu tô atribuindo à variável home (que está dentro de newTask) o valor "this". this significa q é essa classe
+        //ou seja eu tô atribuindo essa classe à variável home dentro de newTask
         
     }//GEN-LAST:event_addButtonActionPerformed
 

@@ -7,6 +7,8 @@ package justdoit;
 
 import javax.swing.JFrame; 
 
+//Essa classe é a mais dboa pra entender
+
 
 /**
  *
@@ -14,17 +16,23 @@ import javax.swing.JFrame;
  */
 public class NewTask extends javax.swing.JFrame {
     
-       Home home;
+       Home home; //inicialização da variável home do tipo Home
     /**
      * Creates new form newTask
      */
     public NewTask() {
+
+        //aqui no construtor eu coloquei alguns comandos de estilização
         initComponents();
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
-        this.setLocationRelativeTo(this);
-        newTaskButton.setFocusPainted(false);
+
+
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // aqui eu tô fazendo com que quando o usuário clique no x pra fechar a janelinha de criação de task o app não feche.. feche só a janela nova que abriu
+        this.setResizable(false); // não deixando o usuário redimensionar a janela
+        this.setLocationRelativeTo(home);//nessa linha eu tô fazendo com que a telinha sempre abra no centro da home (ou pelo menos queria kkk pq não funcionou)
+        newTaskButton.setFocusPainted(false); //tirando o outline dos botões.. outline é aquela linha azul que aparece quando tu clica no botão
         
+
+        //estilização dos textos
         taskTitle.setBorder(null);
         taskTitle.setBackground(null);
         taskDescription.setBorder(null);
@@ -182,14 +190,26 @@ public class NewTask extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+
+
     private void newTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newTaskButtonActionPerformed
+        //essa função é chamada quando o usuário clica no botão de criar
+        
+
+        //Aqui eu simplesmente pego os textos de dentro dos campos de texto taskTitle e taskDescription
         String title = taskTitle.getText();
         String description = taskDescription.getText();
         
-        if(!(title.isEmpty())) {
-            Home.addNewTask(title, description, home);
-            this.dispose();
 
+        //nessa condição eu verifico se o título tá vazio, pois só vamos criar se tiver um título
+
+        if(!(title.isEmpty())) {
+            //se não for vazio a gente chama o método addNewTask de dentro da classe Home passando como parâmetro title, description, home
+            Home.addNewTask(title, description, home);
+
+            //nesse this.dispose() a gente simplesmente tá dizendo pra ele fechar a janela, ou seja, a gente fecha a janela assim que criarmos a task
+            this.dispose();
         }
         
         
